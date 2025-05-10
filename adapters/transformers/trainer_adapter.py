@@ -138,6 +138,7 @@ class TransformersTrainerAdapter(BaseTrainer):
         Returns:
             加载的模型
         """
+        
         # 根据任务类型加载相应的模型
         if self.task_type == "text_classification":
             from transformers import AutoModelForSequenceClassification

@@ -3,7 +3,7 @@ import torch.nn as nn
 from transformers import BertModel, BertPreTrainedModel
 
 
-class Model(BertPreTrainedModel):
+class TestModel(BertPreTrainedModel):
     """
     基于BERT的文本分类模型
     """

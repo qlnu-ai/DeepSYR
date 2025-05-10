@@ -95,8 +95,43 @@ class Factory:
     
     @staticmethod
     def build_dataloader(backend: str, task_type: str, **config):
-        """构建数据加载器"""
-        return Factory.create_adapter(backend, "data", task_type=task_type, **config)
+        """
+        构建数据加载器
+        
+        Args:
+            backend: 后端框架类型，如"transformers"、"yolo"、"paddle"
+            task_type: 任务类型，如"text_classification"、"image_classification"、"object_detection"
+            **config: 配置参数
+            
+        Returns:
+            数据加载器实例
+        """
+        # 根据任务类型选择对应的数据加载器类
+        if task_type == "text_classification":
+            dataloader_class_name = "TextClassificationDataLoader"
+        elif task_type == "image_classification":
+            dataloader_class_name = "ImageClassificationDataLoader"
+        elif task_type == "object_detection":
+            dataloader_class_name = "ObjectDetectionDataLoader"
+        else:
+            raise ValueError(f"不支持的任务类型: {task_type}")
+        
+        # 导入适配器模块
+        module_path = f"adapters.{backend}.data_adapter"
+        module = importlib.import_module(module_path)
+        
+        # 查找对应的数据加载器类
+        dataloader_class = None
+        for name in dir(module):
+            if name.endswith(dataloader_class_name):
+                dataloader_class = getattr(module, name)
+                break
+                
+        if dataloader_class is None:
+            raise ValueError(f"在{module_path}中未找到{dataloader_class_name}类")
+            
+        # 创建数据加载器实例
+        return dataloader_class(model_name=config.get("model_name", ""), **config)
         
     @staticmethod
     def build_trainer(backend: str, task_type: str, model, **config):

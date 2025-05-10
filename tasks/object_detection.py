@@ -132,7 +132,7 @@ class ObjectDetectionTask(BaseTask):
         # 保存模型
         if self.trainer is not None:
             self.trainer.save_model(save_path, **kwargs)
-        elif self.backend == "yolo":
+        elif self.backend == " ":
             # YOLO模型的特殊保存方法
             if hasattr(self.model, "save"):
                 self.model.save(save_path)

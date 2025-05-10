@@ -1,0 +1,12 @@
+[
+    {
+        "image": "image_path",
+        "boxes": [["x_center", "y_center", "width", "height"], ["x_center", "y_center", "width", "height"]],
+        "labels": [1, 2]
+    },
+    {
+        "image": "image_path",
+        "boxes": [["x_center", "y_center", "width", "height"], ["x_center", "y_center", "width", "height"]],
+        "labels": [1, 2]
+    }
+]

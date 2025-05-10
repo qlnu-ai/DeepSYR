@@ -1,0 +1,10 @@
+[
+    {
+        "image": "image_path",
+        "label": 1
+    },
+    {
+        "image": "image_path",
+        "label": 0
+    }
+]

@@ -1,3 +1,3 @@
-from models.transformers.my_model import Model
+from models.transformers.my_model import TestModel 
 
-__all__ = ["Model"] 
+__all__ = ["TestModel"] 
