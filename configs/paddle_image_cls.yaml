@@ -1,0 +1,44 @@
+# 基本配置
+task_type: image_classification
+model_type: paddle
+model_name: resnet50
+num_classes: 1000
+
+# 数据相关配置
+data:
+  train_path: ./data/imagenet/train
+  eval_path: ./data/imagenet/val
+  image_size: 224
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  batch_size: 64
+  augmentation:
+    random_crop: true
+    random_flip: true
+    color_jitter: true
+
+# 训练相关配置
+training:
+  output_dir: ./outputs/paddle_img_cls
+  epochs: 90
+  base_lr: 0.1
+  end_lr: 0.0
+  lr_scheduler: cosine
+  warmup_epochs: 5
+  weight_decay: 0.0001
+  momentum: 0.9
+  use_ema: false
+  ema_decay: 0.9999
+  save_interval: 5
+  log_interval: 20
+
+# 设备配置
+device:
+  use_gpu: true
+  gpu_ids: 0
+  use_xpu: false
+  use_npu: false
+  use_multi_process: false
+  use_amp: false  # 自动混合精度
+  scale_loss: 128.0
+  use_dynamic_loss_scaling: true 

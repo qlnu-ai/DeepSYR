@@ -1,0 +1,42 @@
+# 基本配置
+task_type: text_classification
+model_type: transformers
+model_name: bert-base-chinese
+num_labels: 2
+
+# 数据相关配置
+data:
+  train_path: ./data/train.csv
+  eval_path: ./data/eval.csv
+  text_column: text
+  label_column: label
+  max_length: 128
+  batch_size: 16
+
+# 训练相关配置
+training:
+  output_dir: ./outputs/text_cls
+  num_train_epochs: 3
+  per_device_train_batch_size: 16
+  per_device_eval_batch_size: 32
+  warmup_steps: 500
+  weight_decay: 0.01
+  logging_dir: ./logs/text_cls
+  logging_steps: 100
+  save_steps: 1000
+  evaluation_strategy: steps
+  eval_steps: 500
+  load_best_model_at_end: true
+  metric_for_best_model: accuracy
+
+# 优化器配置
+optimizer:
+  name: adamw
+  lr: 5.0e-5
+  eps: 1.0e-8
+
+# 设备配置
+device:
+  use_cuda: true
+  cuda_visible_devices: 0
+  fp16: true 
