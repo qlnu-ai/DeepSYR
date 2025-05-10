@@ -1,5 +1,7 @@
 # DeepSYR
 
+**!!! 目前项目还在搭建中 !!!**
+
 DeepSYR是一个统一的深度学习框架，支持多种模型库和任务类型。框架采用模块化设计，通过适配器模式抽象不同深度学习库的差异，提供统一的接口。
 
 ## 架构设计
@@ -11,6 +13,7 @@ Configs → Tasks → Core（接口）→ Adapters（具体实现）
 ```
 
 ### 1. Configs → Tasks
+
 - Configs（YAML/JSON）中指明：
   - 选择的任务类型（如 text_classification）
   - 选择的后端框架（如 transformers）
@@ -18,6 +21,7 @@ Configs → Tasks → Core（接口）→ Adapters（具体实现）
 - Tasks 层的构造函数读取 Configs，决定后续构建哪种 DataLoader/Trainer/Predictor。
 
 ### 2. Tasks → Core 接口
+
 - 在 Task 的 _build_components() 中，调用 Core.factory 中的 build_dataloader、build_trainer、build_predictor 并传入：
   - backend（framework）
   - task（任务类型）
@@ -25,6 +29,7 @@ Configs → Tasks → Core（接口）→ Adapters（具体实现）
 - Core.factory 负责把请求路由到相应的 Adapter。
 
 ### 3. Core 接口 → Adapters 实现
+
 - Core 定义了三大基类：
   - BaseDataLoader：get_train_loader()、get_val_loader()
   - BaseTrainer：train()、validate()
@@ -35,6 +40,7 @@ Configs → Tasks → Core（接口）→ Adapters（具体实现）
   - TransformersPredictor, YoloPredictor, PaddlePredictor
 
 ### 4. Utils 贯穿各层
+
 - logging, checkpoint, metrics, distributed 等工具，被 Core 和 Adapters 共同调用，提供：
   - 统一日志格式与级别
   - 模型检查点存取
@@ -130,4 +136,4 @@ python examples/run_text_cls.py --config configs/transformer_text_cls.yaml --pre
 ### 添加新模型
 
 1. 在 `models/` 目录下的相应后端目录中添加新模型
-2. 确保模型类名为 `Model`，或在 `factory.py` 中添加相应的导入逻辑 
+2. 确保模型类名为 `Model`，或在 `factory.py` 中添加相应的导入逻辑
